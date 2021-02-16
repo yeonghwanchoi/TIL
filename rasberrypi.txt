@@ -18,4 +18,12 @@ rasberry pi setting
 
 6. while installing 
 
-	[/root/miniconda3] >>> /home/pt/miniconda3
+	[/root/miniconda3] >>> /home/pi/miniconda3
+
+7. set up path on .bashrc
+	sudo nano /home/pi/.bashrc
+
+	export PATH="/home/pi/miniconda3/bin:$PATH"
+
+8.  
+
