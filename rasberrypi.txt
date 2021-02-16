@@ -1,0 +1,8 @@
+rasberry pi setting
+
+1. add ssh to ssd card
+
+2. login through LAN with ssh pi@192.168.2.2 pw : rasberry
+
+3. change pw -> raspi-config -> system -> change pw
+
