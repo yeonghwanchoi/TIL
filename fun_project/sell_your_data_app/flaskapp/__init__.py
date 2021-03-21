@@ -1,4 +1,5 @@
-from flask import Flask, g, Response ,make_response
+from flask import Flask, g, Response ,make_response, render_template
+
 
 app = Flask(__name__)
 app.debug = True
@@ -7,10 +8,7 @@ app.debug = True
 def res1():
     custom_res = Response('Custom Response', 200, {'test':'ttt'})
     return make_response(custom_res)
-# @app.before_request
-# def before_request():
-#     print("before_request!!!")
-#     g.str = '한글'
+
 
 #WSGI(Webserver Gateway Interface)
 
@@ -18,18 +16,35 @@ def res1():
 def wsgi_test():
     def application(environ, start_response):
         body = 'the request method was %s' % environ['REQUEST_METHOD']
-        headers = [
-            ('Content-Type', 'text/plain'),('Content-Length', str(len(body)))
-        ]
+        headers = [('Content-Type', 'text/plain'),('Content-Length', str(len(body)))]
         start_response('200 ok', headers)
         return[body]
     return make_response(application)
 
-@app.route("/gg")
-def hahaha():
-    return "안녕 세계" + getattr(g, 'str', '111')
+# @app.before_request
+# def before_request():
+#     return None
+
+# @app.route("/gg")
+# def hahaha():
+#     return "안녕 세계" + getattr(g, 'str', '111')
+
+# @app.after_request
+# def after_request():
+#     return None 
 
 @app.route("/")
-def hi():
-    return "hello flask world"
+@app.route("/index")
+def index():
+    user = {'username':"yeonghwan"} 
+    return render_template('index.html', title='blog',user=user)
+# @app.teardown_request
+# def distroy_transaction():
+#     return None
+# @app.route('/sd')
+# def helloworld_local():
+#     return "hahah"
 
+# @app.route('/sd', subdomain='g')
+# def helloworld_local():
+#     return "hahah"
