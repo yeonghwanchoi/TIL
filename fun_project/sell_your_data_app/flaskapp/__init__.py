@@ -21,30 +21,19 @@ def wsgi_test():
         return[body]
     return make_response(application)
 
-# @app.before_request
-# def before_request():
-#     return None
-
-# @app.route("/gg")
-# def hahaha():
-#     return "안녕 세계" + getattr(g, 'str', '111')
-
-# @app.after_request
-# def after_request():
-#     return None 
 
 @app.route("/")
 @app.route("/index")
 def index():
-    user = {'username':"yeonghwan"} 
-    return render_template('index.html', title='blog',user=user)
-# @app.teardown_request
-# def distroy_transaction():
-#     return None
-# @app.route('/sd')
-# def helloworld_local():
-#     return "hahah"
-
-# @app.route('/sd', subdomain='g')
-# def helloworld_local():
-#     return "hahah"
+    user = {'username': 'yeonghwan'}
+    posts = [
+        {
+            'author': {'username': 'John'},
+            'body': 'Beautiful day in Portland!'
+        },
+        {
+            'author': {'username': 'Susan'},
+            'body': 'The Avengers movie was so cool!'
+        }
+    ]
+    return render_template('index.html', title='Home', user=user, posts=posts)
