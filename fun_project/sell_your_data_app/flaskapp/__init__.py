@@ -1,8 +1,15 @@
-from flask import Flask, g, Response ,make_response, render_template
-
+from flask import *
+from forms import LoginForm
+from config import Config
+from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 
 app = Flask(__name__)
 app.debug = True
+app.config['SECRET_KEY'] = 'you-will-never-guess'
+db = SQLAlchemy(app)
+migrate = Migrate(app, db)
+
 
 @app.route('/res1')
 def res1():
@@ -21,7 +28,15 @@ def wsgi_test():
         return[body]
     return make_response(application)
 
-
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+        flash('Login requested for user {}, remember_me={}'.format(
+            form.username.data, form.remember_me.data))
+        return redirect(url_for('index'))
+    return render_template('login.html', title='Sign In', form=form)
+    
 @app.route("/")
 @app.route("/index")
 def index():
